@@ -14,7 +14,6 @@ export class RestaurantService {
 
     }
     async Signup(createRestaurant: CreateRestaurant) {
-        console.log("t7")
         const newResturant = new this.restaurantModel({
             name: createRestaurant.name,
             password: await bcrypt.hash(createRestaurant.password, 10),
@@ -32,9 +31,10 @@ export class RestaurantService {
     //     return newResturant.save()
     // }
 
-    async readProduct() {
-        return this.restaurantModel.find().
-            then((restaurant) => { return restaurant }).catch((err) => console.log(err))
+    async readProduct(page: number) {
+        return this.restaurantModel.find({}).limit(4)
+            .skip(4 * page).
+            then((Product) => { return Product }).catch((err) => console.log(err))
     }
     async findone(condition: any) {
         return this.restaurantModel.findOne(condition)
@@ -42,4 +42,9 @@ export class RestaurantService {
     async findOneById(id: string) {
         return this.restaurantModel.findOne({ _id: id })
     }
+    async pagination(page: number) {
+        return this.restaurantModel.find()
+
+    }
+
 }

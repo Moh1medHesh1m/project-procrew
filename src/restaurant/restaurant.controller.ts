@@ -41,9 +41,9 @@ export class RestaurantController {
         }
     }
 
-    @Get("all")
-    getAllResturant() {
-        return this.RestaurantService.readProduct()
+    @Get("all/:page")
+    getAllResturant(@Param('page') page) {
+        return this.RestaurantService.readProduct(page)
     }
 
     @Post('login')
@@ -69,7 +69,11 @@ export class RestaurantController {
         }
     }
 
-
+    @Get("/paginate/:page")
+    getPaginatedResturant(@Param('page') page) {
+        console.log(page)
+        return this.RestaurantService.pagination(page)
+    }
     @Post('logout')
     async logout(@Res({ passthrough: true }) response: Response) {
         response.clearCookie('jwt')
