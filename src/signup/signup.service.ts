@@ -12,7 +12,8 @@ interface User{
 @Injectable()
 export class SignupService {
     constructor(
-        @InjectModel("Signup") private SignupModel : Model<SignupModel>
+        @InjectModel("Signup") private SignupModel : Model<SignupModel>,
+        
     ){}
    async Signup(user:User){
         const newUser = new this.SignupModel({
@@ -28,4 +29,7 @@ export class SignupService {
     async findone(condition:any){
         return this.SignupModel.findOne(condition)
       }
+      async findOneById(id: string) {
+        return this.SignupModel.findOne({ _id: id })
+    }
 }
