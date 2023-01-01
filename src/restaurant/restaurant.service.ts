@@ -47,4 +47,8 @@ export class RestaurantService {
 
     }
 
+    async search(name : string) {
+        return this.restaurantModel.find({name})
+    }
+
 }

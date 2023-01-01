@@ -74,6 +74,19 @@ export class RestaurantController {
         console.log(page)
         return this.RestaurantService.pagination(page)
     }
+
+    // @Get("/p")
+    // getPaginatedResturant(@Param('page') page) {
+    //     console.log(page)
+    //     return this.RestaurantService.pagination(page)
+    // }
+
+    @Get("/search/:name")
+    getSearchRes(@Param('name') name) {
+        console.log(name)
+        return this.RestaurantService.search(name)
+    }
+    
     @Post('logout')
     async logout(@Res({ passthrough: true }) response: Response) {
         response.clearCookie('jwt')
@@ -83,4 +96,7 @@ export class RestaurantController {
             message: 'logged out'
         }
     }
+
+
+    
 }

@@ -27,4 +27,8 @@ export class OrderService {
     async getOrderRestaurant(id: string) {
         return await this.ordertModel.find({ restaurant: id })
     }
+
+    async updateOrder(id, data) {
+        return this.ordertModel.findByIdAndUpdate(id, data, { new: true })
+    }
 }

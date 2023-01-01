@@ -18,6 +18,6 @@ import { JwtModule } from '@nestjs/jwt/dist';
 
   controllers: [RestaurantController],
   providers: [RestaurantService],
-  // exports:[]s
+  exports: [RestaurantService]
 })
 export class RestaurantModule { }

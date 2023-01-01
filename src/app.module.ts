@@ -1,5 +1,6 @@
+import { JwtModule } from '@nestjs/jwt';
 
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -7,6 +8,7 @@ import { SignupModule } from './signup/signup.module';
 import { ProductModule } from './product/product.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
 import { OrderModule } from './order/order.module';
+import { RestaurantMiddleware } from './restaurant-middleware/restaurant-middleware.middleware';
 
 
 @Module({
@@ -16,12 +18,21 @@ import { OrderModule } from './order/order.module';
     SignupModule,
     ProductModule,
     RestaurantModule,
-    OrderModule
-
+    OrderModule,
+    JwtModule
   ],
 
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RestaurantMiddleware)
+      .exclude(
+        { path: 'restaurant/login', method: RequestMethod.POST },
+        { path: 'restaurant', method: RequestMethod.POST },
+        'restaurant/(.*)',
+      )
+  }
 }

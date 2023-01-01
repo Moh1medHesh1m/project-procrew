@@ -1,7 +1,8 @@
 import { OrderService } from './order.service';
-import { Body, Controller, Post, Req, Get, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Post, Req, Get, UnauthorizedException, Put, Param } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateOrderDto } from './order.dto/createOrder.dto';
+import { OrderUpdateDto } from './orderUpdate.dto';
 
 @Controller('order')
 export class OrderController {
@@ -34,5 +35,11 @@ export class OrderController {
         const data = await this.jwtService.verifyAsync(request.cookies['jwt'])
         console.log(data)
         return await this.orderService.getOrderRestaurant(data.id)
+    }
+
+    @Put(':id')
+    async updateProduct(@Param('id') id: string, @Body() orderUpdateDto: OrderUpdateDto) {
+        return await this.orderService.updateOrder(id, orderUpdateDto)
+
     }
 }
