@@ -1,3 +1,4 @@
+import { UserMiddleware } from './user-middleware/user-middleware.middleware';
 import { JwtModule } from '@nestjs/jwt';
 
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
@@ -33,6 +34,16 @@ export class AppModule {
         { path: 'restaurant/login', method: RequestMethod.POST },
         { path: 'restaurant', method: RequestMethod.POST },
         'restaurant/(.*)',
+      ),
+      consumer
+      .apply(UserMiddleware)
+      .exclude(
+        { path: 'api/login', method: RequestMethod.POST },
+        { path: 'api', method: RequestMethod.POST },
+        'api/(.*)',
       )
+      
   }
+  
+  
 }
